@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>User Master</title>
+    <style>
+
+        #container{
+            margin:auto;
+            width:80%;
+        }
+
+        #addUsers{
+            margin:auto;
+            width:80%;
+        }
+        
+        #result {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+}
+
+        #result td, #result th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        }
+
+#result tr:nth-child(even){background-color: #f2f2f2;}
+
+#result tr:hover {background-color: #ddd;}
+
+#result th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: darkblue;
+        color: white;
+}
+        
+    </style>
+</head>
+<body onload="getUsers()">
+    <div class="container">
+        <div class="jumbotron">
+            <div>
+                <h2 style="text-align: center;background-color: lightskyblue">Users List</h2>
+            </div>
+            <div id="addUsers" class="form-group">
+                <!--<input type="text" name="id" id="id" placeholder="Enter Id"><br>-->
+                <input type="text" name="id" id="id" placeholder="Id" class="form-control" disabled >
+
+                <input type="text" name="name" id="name" class="form-control" placeholder="Enter User Name">
+                <input type="text" name="email" id="email" class="form-control" placeholder="Enter Email">
+                <input type="text" name="city" id="city" class="form-control" placeholder="Enter City">
+                <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter Phone No">
+                <input type="text" name="company" id="company" class="form-control" placeholder="Enter Company">
+
+                <button style="background-color: cornflowerblue;margin: 1%" id="add" onclick="addUsers()">Add User</button>
+                <button style="background-color: cornflowerblue;margin: 1%" id="update" onclick="UpdateUserData()" disabled>Update User</button><br><br><br>
+            </div>
+            <div>
+                <input type="text" name="searchusertext" id="searchusertext" placeholder="Search User">
+                <button style="background-color: cornflowerblue;margin: 1%" id="search" onclick="searchUsers()">Search Users</button>
+            </div>
+            <div>
+                <table id='result'></table>
+            </div>
+        </div>
+    </div>
+    <script>
+
+
+        var usersMasterList=[];
+        function getUsers(){
+            document.getElementById('add').disabled=false;
+            document.getElementById('update').disabled=true;
+            fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response=>response.json())
+            //.then(json=>console.log(json))
+            .then(json=>showUsers(json))    
+        }
+        function showUsers(data){
+            usersMasterList=data;           
+            var dispdata=`<tr><th>Id</th><th>Name</th><th>Email ID</th><th>City</th><th>Phone</th><th>Company</th><th>Update</th><th>Delete</th></tr>`;
+            for (let i=0;i<usersMasterList.length;i++){
+                dispdata= dispdata +`<tr><td>${usersMasterList[i].id}</td>
+                <td>${usersMasterList[i].name}</td>
+                <td>${usersMasterList[i].email}</td>
+                <td>${usersMasterList[i].address.city}</td>
+                <td>${usersMasterList[i].phone}</td>
+                <td>${usersMasterList[i].company.name}</td>
+                <td><button id=${usersMasterList[i].id} onclick="updateUsers(${usersMasterList[i].id})">Update</button></td>
+                <td><button id=${usersMasterList[i].id} onclick="deleteUsers(${usersMasterList[i].id})">Delete</button></tr>`;
+            }
+            document.getElementById('result').innerHTML=dispdata;
+        }
+
+        function updateUsers(id)
+        {
+            datatoupdate='';
+            for (i=0;i<usersMasterList.length;i++)
+            {
+               if (usersMasterList[i].id==id)
+               datatoupdate = usersMasterList[i];
+            }            
+            document.getElementById('id').value=datatoupdate.id;
+            document.getElementById('name').value=datatoupdate.name;
+            document.getElementById('email').value=datatoupdate.email;
+            document.getElementById('city').value=datatoupdate.address.city;
+            document.getElementById('phone').value=datatoupdate.phone;
+            document.getElementById('company').value=datatoupdate.company.name;
+            document.getElementById('add').disabled=true;
+            document.getElementById('update').disabled=false;            
+        }
+
+        function deleteUsers(id)
+        {            
+            console.log("delete User id ",id);
+            deleteindex=-1;
+            for (i=0;i<usersMasterList.length;i++)
+            {
+               if (usersMasterList[i].id==id)
+                deleteindex = i;
+            }
+            if (deleteindex>=0)
+            {
+                console.log('delete index::',deleteindex);
+                usersMasterList.splice(deleteindex,1);
+            }
+            showUsers(usersMasterList);
+           }
+        
+        function addUsers(){
+            id=usersMasterList.length+1;
+            console.log('id ',id);           
+            name=document.getElementById('name').value;
+            email=document.getElementById('email').value;
+            city=document.getElementById('city').value;
+            phone=document.getElementById('phone').value;
+            company=document.getElementById('company').value;
+            //newtodo = {'id':id,'title':title,'userId':userId,'status':status};
+            fetch('https://jsonplaceholder.typicode.com/users',            
+            {
+                headers: { "Content-Type": "application/json; charset=utf-8" },
+                method: 'POST',
+                body: JSON.stringify({
+                    id: id,
+                    name: name,
+                    email:email,
+                    city:city,
+                    phone:phone,
+                    company:company
+                })
+            }            
+            )
+            .then(response=>response.json())
+            //.then(json=>console.log('add ',json))
+            .then(json=>addData(json))
+        
+        }
+
+        function addData(todo){
+            usersMasterList.unshift(todo);
+            showUsers(usersMasterList);        
+        }
+
+        function UpdateUserData(){            
+            id=document.getElementById('id').value;
+            name=document.getElementById('name').value;
+            email=document.getElementById('email').value;
+            city=document.getElementById('city').value;
+            phone=document.getElementById('phone').value;
+            company=document.getElementById('company').value;
+
+            url=`https://jsonplaceholder.typicode.com/users/${id}`
+            
+            fetch(url,            
+            {
+                headers: { "Content-Type": "application/json; charset=utf-8" },
+                method: 'PUT',
+                body: JSON.stringify({
+                    id: id,
+                    name: name,
+                    email:email,
+                    city:city,
+                    phone:phone,
+                    company:company
+                })
+            }            
+            )
+            .then(response=>response.json())
+            .then(json=>
+            {
+                console.log('updated',json);
+                for (i=0;i<usersMasterList.length;i++)
+                {
+                    if (usersMasterList[i].id==id)
+                    {
+                        updatedUsers={
+                            id: id,
+                            name: name,
+                            email:email,
+                            city:city,
+                            phone:phone,
+                            company:company
+                        };
+                        console.log('updated usersMasterList :: ',updatedUsers);
+                        usersMasterList[i]=updatedUsers;
+                        showUsers(usersMasterList);
+                    }            
+                }
+            }          
+            
+            )
+        }
+
+        function searchUsers(){
+            searchText = document.getElementById('searchusertext').value;
+
+            if(searchText=='')
+            {
+                getUsers();
+            }
+            else
+            {
+                fetch('https://jsonplaceholder.typicode.com/users')
+                .then(response=>response.json())
+                //.then(json=>console.log(json))
+                .then(json=>filterUsers(json,searchText))   
+            } 
+        }
+
+        function filterUsers(data,userText){
+            usersMasterList=data;           
+            var dispdata=`<tr><th>Id</th><th>Name</th><th>Email ID</th><th>City</th><th>Phone</th><th>Company</th><th>Update</th><th>Delete</th></tr>`;
+            for (let i=0;i<usersMasterList.length;i++){
+                var regex = new RegExp( userText , "i");
+                console.log(regex)
+                if(usersMasterList[i].name.match(regex)!==null)
+                {
+                dispdata= dispdata +`<tr><td>${usersMasterList[i].id}</td>
+                <td>${usersMasterList[i].name}</td>
+                <td>${usersMasterList[i].email}</td>
+                <td>${usersMasterList[i].address.city}</td>
+                <td>${usersMasterList[i].phone}</td>
+                <td>${usersMasterList[i].company.name}</td>
+                <td><button id=${usersMasterList[i].id} onclick="updateUsers(${usersMasterList[i].id})">Update</button></td>
+                <td><button id=${usersMasterList[i].id} onclick="deleteUsers(${usersMasterList[i].id})">Delete</button></tr>`;
+                }
+            }
+            document.getElementById('result').innerHTML=dispdata;
+        }
+
+    </script>
+    
+</body>
+</html>

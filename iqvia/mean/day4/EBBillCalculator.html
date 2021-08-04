@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EB Bill Calculator</title>
+</head>
+<body>
+    <h1>EB Bill Calculator</h1>
+
+    <input id="ebunits" type="number" placeholder="Enter Units Consumed"/>
+
+    <button id="submit" onclick="ShowBillAmount()">View Bill Amount</button>
+   
+    <p id="billamount"></p>
+
+    <script>
+
+
+        function ShowBillAmount()
+        {
+            unitsconsumed = document.getElementById("ebunits").value;
+
+            billamount = calculatebillamount(unitsconsumed);
+
+            document.getElementById("billamount").innerHTML="Your Bill amount is : "+billamount;
+        }
+
+        function calculatebillamount(unitsconsumed)
+        {
+            res=0;
+
+            if(unitsconsumed<=100)
+                res = 1 * unitsconsumed;
+
+            else if(unitsconsumed>100 && unitsconsumed<=200)
+                res = (100 * 1) + ((unitsconsumed-100)*2); 
+
+            else if(unitsconsumed>200 && unitsconsumed<=300)
+                res = (100 * 1) + (100*2) + ((unitsconsumed-200)*3);
+
+            else if(unitsconsumed>300)
+                res = (100 * 1) + (100*2) + (100*3) + ((unitsconsumed-300)*5);
+
+            else res = 1;
+
+            return res;
+        }  
+
+    </script>
+    
+</body>
+</html>

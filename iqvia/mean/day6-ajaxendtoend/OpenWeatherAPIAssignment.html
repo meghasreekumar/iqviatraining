@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Open Weather</title>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+
+        <div style="background-color:orange" style="margin:20px">
+            <h2 style="text-align: center">Open Weather Map</h2>
+        </div>
+
+        <div class="form-group">
+            <label id="Location">Location</label>
+            <input id="LocationInput" type="text" class="form-control"/>
+
+            <button onclick="getweatherinfo()" class="btn btn-default">Submit</button>
+
+        </div>
+
+        <div style="background-color:rosybrown" style="margin:20px">
+            <h3 style="text-align: center">Weather Info</h3>
+        </div>
+
+        <div class="form-group">
+        <label id=Location2>Location : </label>
+        <label id="LocationVal" name="LocationVal" class="form-control"/>
+        </div>
+
+   
+        <div class="form-group">
+          
+            <div class="form-group"> 
+                 <h4>Coordinates</h4>
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    <label id=longL>Longitude : </label>
+                    <label id="LongVal" name="LongVal" class="form-control" ></label>
+                </div>
+                <div class="form-group">
+                    <label id=latL>Latitude : </label>
+                    <label id="LatVal" name="LatVal" class="form-control"></label>
+                </div>
+            </div>
+        </div>
+  
+
+    <div class="form-group">
+        <label id=TemperatureL>Temperature : </label>
+        <label id="TermperatureVal" name="TermperatureVal" class="form-control"/>
+    </div>  
+    <div class="form-group">
+        <label id=PressureL>Pressure : </label>
+        <label id="PressureVal" name="PressureVal" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label id=HumidityL>Humidity : </label>
+        <label id="HumidityVal" name="HumidityVal" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label id=WindL>Wind : </label>
+        <label id="WindVal" name="WindVal" class="form-control"/>
+    </div>  
+
+    </div>
+    </div>
+
+
+    <script>
+       
+        function getweatherinfo(){
+
+            cityname = document.getElementById("LocationInput").value;
+            api =  `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=384db1ce93218e20fd384d3016372238&units=metric`
+            console.log(cityname);
+            console.log(api);
+            fetch(api).then(response=>response.json())
+            //.then(json=>console.log(json))
+            .then(json=>displayData(json))
+        }
+        /**
+         * 
+         * {userId: 1, id: 1, title: "delectus aut autem", completed: false}
+         * **/
+        function displayData(jsondata){
+            cityinfo = jsondata;
+                    
+            document.getElementById("LocationVal").innerHTML=cityinfo.name;
+            document.getElementById("LongVal").innerHTML=cityinfo.coord.lon;
+            document.getElementById("LatVal").innerHTML=cityinfo.coord.lat;
+            document.getElementById("TermperatureVal").innerHTML=cityinfo.main.temp;
+            document.getElementById("PressureVal").innerHTML=cityinfo.main.pressure;
+            document.getElementById("HumidityVal").innerHTML=cityinfo.main.humidity;
+            document.getElementById("WindVal").innerHTML=cityinfo.wind.speed;
+
+                
+        }        
+    </script>
+</body>
+</html>

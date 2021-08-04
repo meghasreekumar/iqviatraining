@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corona Patient Management</title>
+</head>
+<body>
+    <h1 style="color: red; text-align: center;" >Corona Patient Management</h1>
+    <form method="POST">
+    <Label width="200px">Name of the patient</Label>
+    <input type="text" id="name" name="name" placeholder="Patient Name" autofocus>
+    <br><br>
+    <Label>Gender</Label>
+    Male : <input type="radio" id="Male" name="gender" value="Male">  
+    Female : <input type="radio" id="Female" name="gender" value="Female">
+    Others : <input type="radio" id="Others" name="gender" value="Others">
+    <br><br>
+    <Label>Location</Label>
+    <select value="chn">
+            <option value="chn">Chennai</option>
+            <option value="bng">Bengaluru</option>
+            <option value="hyd">Hyderabad</option>
+            <option value="mum">Mumbai</option>
+            <option value="del">Delhi</option>
+    </select>
+    <br><br>
+    <Label>Pincode</Label>
+    <input type="text" id="pincode" name="pincode" maxlength=6>
+    <br><br>
+    <Label>Aadhaar</Label>
+    <input type="number" id="aadhar" name="aadhaar" maxlength=10>
+    <br><br>
+    <Label>Mobile No</Label>
+    <input type="number" id="aadhar" name="aadhaar" maxlength=10>
+    <br><br>
+    <Label>Attendee Name</Label>
+    <input type="text" id="attendeename" name="attendeename" placeholder="Attendee Name">
+    <br><br>
+    <Label>Date & Time of Request</Label>
+    <input type="datetime-local" id="requestdatetime" name="requestdatetime">
+    <br><br>
+    <Label>SPO2 Level (0 to 100)</Label>
+    <input type="range" id="spo2level" name="spo2level" min="0" max="100">
+    <br><br>
+    <Label>Type of Hospital</Label>
+    <select>
+            <option value="gov">Government</option>
+            <option value="prv">Private</option>
+            <option value="ccr">Care Center</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Register">
+    </form>
+
+    <table>
+            <tr>
+                <!--<thead></thead> -->
+                <!--Row Headers-->
+                <th>SlNo</th>
+                <th>BU Number</th>
+                <th>Patient Name</th>
+                <th>Date & Time of Request</th>
+                <th>Type of Hospital</th>
+            </tr>
+                <!-- <tbody></tbody> -->
+            <tr>
+                    <!--Row Headers-->
+                <td>1</td>
+                <td><a href="html.html" >12345</a></td>
+                <td>Ravi</td>
+                <td>5/10/2021 10:55 AM</td>
+                <td>Government</td>
+            </tr>
+            <tr>
+                        <!--Row Headers-->
+                <td>1</td>
+                <td><a href="html.html">67890</a></td>
+                <td>Nandhini</td>
+                <td>5/10/2021 10:55 AM</td>
+                <td>Private</td>
+            </tr>
+
+        </table>
+
+</body>
+</html>
