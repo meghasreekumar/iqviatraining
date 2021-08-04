@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <title>ng-repeat</title>
+
+    <style>
+                #result {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse:collapse;
+        width: 50%;
+}
+
+        #result td, #result th {
+        border: 1px solid #ddd;
+        padding: 10px;
+        }
+
+#result tr:nth-child(even){background-color: #f2f2f2;}
+
+#result tr:hover {background-color: #ddd;}
+
+#result th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: darkblue;
+        color: white;
+}
+    </style>
+</head>
+<body ng-app="" ng-init="employees=[
+{name:'raghu',profession:'IT',country:'India'},
+{name:'Tilaka Ratne',profession:'Cricketer',country:'Srilanka'},
+{name:'Bose',profession:'Economist',country:'USA'}
+]">
+<ul>
+    <h3>Table Format</h3>
+    <table id="result">
+        <tr>
+            <th>Employee Name</th>
+            <th>Employee Profession</th>
+            <th>Employee Country</th>
+        </tr>
+        <tr ng-repeat="emp in employees"> 
+                <td>{{emp.name}}</td>
+                <td>{{emp.profession}}</td>
+                <td>{{emp.country}}</td>
+            </tr>
+
+    </table>
+
+    <h3>List Format</h3>
+    <li ng-repeat="emp in employees">{{emp.name}}-{{emp.profession}}-{{emp.country}}</li>
+
+
+</ul>
+</body>
+</html>
