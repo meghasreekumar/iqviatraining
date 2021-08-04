@@ -62,9 +62,11 @@
             todos=data;           
             var dispdata=`<tr><th>Id</th><th>Title</th><th>User Id</th><th>Completed</th><th>Update</th><th>Delete</th></tr>`;
             for (let i=0;i<todos.length;i++){
-                dispdata= dispdata +`<tr><td>${todos[i].id}</td><td>${todos[i].title}</td><td>${todos[i].userId}
-                </td><td>${todos[i].completed}</td><td><button id=${todos[i].id} onclick="updateTodos(${todos[i].id})">
-                Update</button></td><td><button id=${todos[i].id} onclick="deleteTodos(${todos[i].id})">Delete</button></tr>`;
+                dispdata= dispdata +`<tr><td>${todos[i].id}</td>
+                <td>${todos[i].title}</td><td>${todos[i].userId}
+                </td><td>${todos[i].completed}</td>
+                <td><button id=${todos[i].id} onclick="updateTodos(${todos[i].id})">Update</button></td>
+                <td><button id=${todos[i].id} onclick="deleteTodos(${todos[i].id})">Delete</button></tr>`;
             }
             document.getElementById('result').innerHTML=dispdata;
         }
